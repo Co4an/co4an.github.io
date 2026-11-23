@@ -560,7 +560,7 @@
       actions.push(`<a class="btn btn-secondary" href="${project.publicUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.openGithubLabel)}</a>`);
     }
     if (!actions.length) {
-      actions.push(`<a class="btn btn-primary" href="https://t.me/ceorussian" target="_blank" rel="noopener noreferrer">${escapeHtml(t.contactTelegram)}</a>`);
+      actions.push(`<a class="btn btn-primary" href="https://t.me/Zubenko_Michail_Petrovich" target="_blank" rel="noopener noreferrer">${escapeHtml(t.contactTelegram)}</a>`);
     }
 
     document.getElementById("dialog-body").innerHTML = `
