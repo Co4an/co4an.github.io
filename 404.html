@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050507">
+  <title>404 — Страница не найдена · Роман Ткачев</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --void: #050507;
+      --surface: #0C0C10;
+      --ink: #F4F4F5;
+      --body: #D4D4D8;
+      --hairline: rgba(255, 255, 255, 0.09);
+      --accent: #FF5E1A;
+      --accent-hover: #FF7538;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100svh;
+      background: var(--void);
+      color: var(--ink);
+      font-family: "Manrope", system-ui, -apple-system, sans-serif;
+      display: grid;
+      place-items: center;
+      padding: 32px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      max-width: 520px;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 40px;
+    }
+    .code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-family: "Unbounded", "Manrope", sans-serif;
+      font-size: 26px;
+      line-height: 1.2;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      text-wrap: balance;
+    }
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--body);
+      margin-bottom: 24px;
+    }
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #050507;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 22px;
+      border-radius: 9999px;
+      transition: background-color 200ms cubic-bezier(0.22, 1, 0.36, 1), transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    a:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="code">HTTP 404</p>
+    <h1>Страница не найдена</h1>
+    <p>Запрошенный адрес отсутствует или перенесён. Вернитесь на главную страницу портфолио Романа Ткачева.</p>
+    <a href="/">Вернуться в портфолио</a>
+  </main>
+</body>
+</html>

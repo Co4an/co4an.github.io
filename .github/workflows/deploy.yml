@@ -1,0 +1,76 @@
+name: Deploy Site and Portfolio to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate site scripts and portfolio files
+        run: |
+          set -euo pipefail
+          test -f .nojekyll
+          for f in \
+            index.html \
+            404.html \
+            privacy.html \
+            robots.txt \
+            favicon.svg \
+            styles.css \
+            data.js \
+            spatial-webgl.js \
+            app.js \
+            assets/media/og-preview.png \
+            Roman_Tkachev_Portfolio_RU.pdf \
+            Roman_Tkachev_Portfolio_EN.pdf \
+            print/portfolio-ru.html \
+            print/portfolio-en.html
+          do
+            test -s "$f" || { echo "Missing or empty required file: $f" >&2; exit 1; }
+          done
+          node --check data.js
+          node --check spatial-webgl.js
+          node --check app.js
+
+      - name: Stage Pages bundle
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          cp .nojekyll index.html 404.html privacy.html robots.txt favicon.svg styles.css data.js spatial-webgl.js app.js _site/
+          cp Roman_Tkachev_Portfolio_RU.pdf Roman_Tkachev_Portfolio_EN.pdf _site/
+          cp -R assets print _site/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

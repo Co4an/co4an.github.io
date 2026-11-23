@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru" data-type="software" data-radius="pill" data-buttons="solid">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="page-type" content="software">
+  <meta name="site-kind" content="software">
+  <meta name="theme-color" content="#050507">
+  <title>Роман Ткачев — AI-системы и прикладной R&amp;D</title>
+  <meta name="description" content="Портфолио Романа Ткачева: локальные нейросимвольные системы, защищённый сетевой транспорт на Rust и Swift, количественный анализ акций, прикладное машинное обучение, макромодели и запуск продуктов 0 → 1.">
+  <link rel="canonical" href="https://co4an.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://co4an.github.io/">
+  <meta property="og:title" content="Роман Ткачев — AI-системы и прикладной R&amp;D">
+  <meta property="og:description" content="6 систем и исследований: от постквантового транспорта на Rust и Swift и автономной нейросимвольной СППР на Apple Silicon до открытого количественного терминала, графового ML, макромоделирования и запуска продуктов 0 → 1.">
+  <meta property="og:image" content="https://co4an.github.io/assets/media/og-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://co4an.github.io/assets/media/og-preview.png">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <canvas id="spatial-canvas" class="spatial-canvas" aria-hidden="true"></canvas>
+
+  <a class="skip-link" href="#main-content" id="skip-link">Перейти к содержанию</a>
+
+  <header class="site-header" id="top">
+    <div class="header-pill">
+      <a class="brand" href="#top" aria-label="Наверх страницы">
+        <span class="brand-monogram" translate="no">RT<span class="brand-dot">.</span></span>
+        <span class="brand-name" id="brand-name">Роман Ткачев</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Основная навигация">
+        <a class="nav-link" href="#systems" data-nav="systems">Проекты</a>
+        <a class="nav-link" href="#research" data-nav="research">Исследования</a>
+        <a class="nav-link" href="#formats" data-nav="work">Форматы</a>
+        <a class="nav-link" href="#experience" data-nav="experience">Опыт</a>
+        <a class="nav-link" href="#contact-section" data-nav="contact">Контакты</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Выбор языка">
+          <button type="button" class="lang-btn" data-lang="ru" aria-pressed="true">RU</button>
+          <span class="lang-sep" aria-hidden="true">/</span>
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <a class="btn btn-primary header-cta" href="#contact-section" id="header-cta">Обсудить проект</a>
+        <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-drawer">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3 6h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+            <path d="M3 14h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" hidden>
+    <nav class="mobile-nav" aria-label="Мобильная навигация">
+      <a class="mobile-nav-link" href="#systems" data-nav="systems">Проекты</a>
+      <a class="mobile-nav-link" href="#research" data-nav="research">Исследования</a>
+      <a class="mobile-nav-link" href="#formats" data-nav="work">Форматы</a>
+      <a class="mobile-nav-link" href="#experience" data-nav="experience">Опыт</a>
+      <a class="mobile-nav-link" href="#contact-section" data-nav="contact">Контакты</a>
+    </nav>
+    <div class="mobile-drawer-actions">
+      <div class="lang-switch" role="group" aria-label="Выбор языка">
+        <button type="button" class="lang-btn" data-lang="ru" aria-pressed="true">RU</button>
+        <span class="lang-sep" aria-hidden="true">/</span>
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="btn btn-primary" href="#contact-section" id="mobile-cta">Обсудить проект</a>
+    </div>
+  </div>
+
+  <main id="main-content" class="page-layer">
+    <div class="sr-only" aria-live="polite" id="live-status"></div>
+
+    <section class="hero-section" aria-labelledby="hero-title">
+      <div class="wrap hero-inner">
+        <div class="hero-content" data-enter>
+          <p class="hero-role" id="hero-role">Роман Ткачев — инженер ИИ-систем и прикладного R&amp;D</p>
+          <h1 class="hero-title" id="hero-title">AI-СИСТЕМЫ И ПРИКЛАДНОЙ R&amp;D</h1>
+          <p class="hero-lead" id="hero-lead">6 систем и исследований: от постквантового транспорта на Rust и Swift и автономной нейросимвольной СППР на Apple Silicon до открытого количественного терминала, графового ML, макромоделирования и запуска продуктов 0 → 1.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="#contact-section" id="hero-cta">Обсудить проект</a>
+            <a class="btn btn-secondary btn-lg" href="./Roman_Tkachev_Portfolio_RU.pdf" id="hero-pdf" download>Скачать PDF-досье</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band" id="systems" aria-labelledby="spotlight-heading">
+      <div class="wrap">
+        <div class="chapter-head">
+          <h2 class="section-title" id="spotlight-heading">Ключевые проекты</h2>
+          <p class="section-lead" id="spotlight-lead">Шесть разработок на стыке прикладного ИИ, системного инжиниринга, количественных финансов, макромоделирования и запуска продуктов 0 → 1.</p>
+        </div>
+
+        <div class="flagship-stage">
+          <div class="chapter-rail" role="tablist" aria-label="Ключевые проекты" id="spotlight-tabs"></div>
+          <div class="spotlight-panel" role="tabpanel" id="spotlight-panel" tabindex="0"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band" id="research" aria-labelledby="research-heading">
+      <div class="wrap">
+        <div class="chapter-head">
+          <h2 class="section-title" id="research-heading">Исследования и эмпирическая проверка</h2>
+          <p class="section-lead" id="research-lead">Математические гипотезы, воспроизводимые расчёты и проверяемые метрики на открытых и исследовательских данных.</p>
+        </div>
+
+        <div class="research-grid" id="research-grid"></div>
+      </div>
+    </section>
+
+    <section class="statement-band" aria-label="Инженерный принцип">
+      <div class="wrap">
+        <p class="statement-text" id="statement-text"></p>
+      </div>
+    </section>
+
+    <section class="section-band" id="formats" aria-labelledby="work-heading">
+      <div class="wrap">
+        <div class="chapter-head">
+          <h2 class="section-title" id="work-heading">Форматы взаимодействия для бизнеса и инвесторов</h2>
+          <p class="section-lead" id="work-lead">Помогаю основателям, корпоративным командам и инвестиционным группам переводить сложные технические задачи в проверяемые продукты.</p>
+        </div>
+
+        <div class="tracks-grid" id="tracks-grid"></div>
+        <div class="process-grid" id="process-grid"></div>
+      </div>
+    </section>
+
+    <section class="section-band" id="experience" aria-labelledby="experience-heading">
+      <div class="wrap">
+        <div class="chapter-head">
+          <h2 class="section-title" id="experience-heading">Опыт и образование</h2>
+        </div>
+
+        <div class="experience-timeline" id="experience-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="closing-band page-layer" id="contact-section" aria-labelledby="close-heading">
+    <div class="wrap">
+      <div class="closing-top">
+        <div class="closing-copy">
+          <h2 class="closing-title" id="close-heading">Обсудим совместный проект или пилот</h2>
+          <p class="closing-lead" id="close-lead">Отвечаю лично в Telegram и по почте. Демонстрация закрытых проектов доступна на встрече.</p>
+          <p class="closing-meta" id="location-note">Москва · гибрид и удалённое сотрудничество</p>
+        </div>
+        <div class="closing-actions">
+          <a class="btn btn-primary btn-lg" href="https://t.me/ceorussian" target="_blank" rel="noopener noreferrer" id="btn-telegram">Написать в Telegram</a>
+          <a class="btn btn-secondary btn-lg" href="mailto:ratkachev@edu.hse.ru" id="btn-email">Отправить письмо</a>
+          <a class="btn btn-secondary btn-lg" href="https://github.com/Co4an" target="_blank" rel="noopener noreferrer" id="btn-github">Открыть профиль GitHub</a>
+        </div>
+      </div>
+
+      <div class="closing-bottom">
+        <div class="dossier-links">
+          <a class="text-link" href="./Roman_Tkachev_Portfolio_RU.pdf" download id="download-ru">PDF-портфолио (RU)</a>
+          <a class="text-link" href="./Roman_Tkachev_Portfolio_EN.pdf" download id="download-en">PDF Portfolio (EN)</a>
+          <a class="text-link" href="./privacy.html" id="privacy-link">Конфиденциальность</a>
+        </div>
+        <p class="copyright" id="copyright">© 2026 Роман Ткачев</p>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="case-dialog" id="case-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-shell">
+      <div class="dialog-topbar">
+        <span class="mono-meta" id="dialog-category"></span>
+        <button type="button" class="dialog-close" id="dialog-close" aria-label="Закрыть разбор">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="dialog-body" id="dialog-body"></div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-secondary" id="dialog-prev">Предыдущий</button>
+        <button type="button" class="btn btn-secondary" id="dialog-next">Следующий</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="./data.js"></script>
+  <script src="./spatial-webgl.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

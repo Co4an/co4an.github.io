@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#050507">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <title>Роман Ткачев — AI-системы и прикладной R&amp;D</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --void: #050507;
+      --surface: #0C0C10;
+      --panel: #121218;
+      --ink: #F4F4F5;
+      --body: #D4D4D8;
+      --muted: #8E8E98;
+      --dim: #52525B;
+      --accent: #FF5E1A;
+      --accent-soft: rgba(255, 94, 26, 0.14);
+      --live: #22C55E;
+      --hairline: rgba(255, 255, 255, 0.09);
+      --hairline-strong: rgba(255, 255, 255, 0.16);
+      --font-display: "Unbounded", "Manrope", system-ui, sans-serif;
+      --font-sans: "Manrope", system-ui, -apple-system, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      background-color: var(--void);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 8.6pt;
+      line-height: 1.46;
+      -webkit-font-smoothing: antialiased;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .page {
+      position: relative;
+      width: 210mm;
+      height: 297mm;
+      padding: 12.5mm 14mm 11.5mm 14mm;
+      background-color: var(--void);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      page-break-after: always;
+      break-after: page;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+      break-after: auto;
+    }
+
+    /* =====================================================================
+       PAGE 1: COVER HERO WITH 3D CODE GLYPH WAVE TERRAIN
+       ===================================================================== */
+    .hero-wave {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 210mm;
+      height: 128mm;
+      object-fit: cover;
+      object-position: center top;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-fade {
+      position: absolute;
+      top: 86mm;
+      left: 0;
+      right: 0;
+      height: 44mm;
+      background: linear-gradient(180deg, rgba(5, 5, 7, 0) 0%, #050507 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .page-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .header-pill {
+      height: 10.5mm;
+      padding: 0 5mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(12, 12, 16, 0.88);
+      border: 1px solid var(--hairline);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      margin-bottom: 8.5mm;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 3mm;
+    }
+
+    .brand-monogram {
+      font-family: var(--font-display);
+      font-size: 11pt;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+    }
+
+    .brand-dot {
+      color: var(--accent);
+    }
+
+    .brand-name {
+      font-size: 8.2pt;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .pill-links {
+      display: flex;
+      align-items: center;
+      gap: 4.5mm;
+      font-family: var(--font-mono);
+      font-size: 7.3pt;
+      color: var(--muted);
+    }
+
+    .pill-links a {
+      color: var(--body);
+    }
+
+    .pill-links .accent-link {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .hero-block {
+      padding-top: 2mm;
+      margin-bottom: 6mm;
+    }
+
+    .hero-role {
+      font-size: 9pt;
+      font-weight: 500;
+      color: var(--body);
+      margin-bottom: 3mm;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 26pt;
+      line-height: 1.03;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      word-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-wrap: balance;
+      margin-bottom: 3.8mm;
+    }
+
+    .hero-lead {
+      max-width: 156mm;
+      font-size: 8.9pt;
+      line-height: 1.48;
+      color: var(--body);
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 5mm;
+      padding: 3.2mm 0;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      background: rgba(5, 5, 7, 0.72);
+    }
+
+    .hero-metric {
+      padding-right: 4mm;
+    }
+
+    .hero-metric + .hero-metric {
+      padding-left: 4.5mm;
+      border-left: 1px solid var(--hairline);
+    }
+
+    .hero-metric-val {
+      font-family: var(--font-display);
+      font-size: 13.5pt;
+      line-height: 1.15;
+      font-weight: 700;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hero-metric-val span {
+      color: var(--accent);
+    }
+
+    .hero-metric-lbl {
+      margin-top: 1mm;
+      font-size: 7.4pt;
+      color: var(--muted);
+    }
+
+    /* =====================================================================
+       INNER RUNNING HEADER & SECTION HEADINGS
+       ===================================================================== */
+    .running-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 3.5mm;
+      margin-bottom: 6mm;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .running-right {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      font-family: var(--font-mono);
+      font-size: 7.4pt;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .running-page {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .sec-title {
+      font-family: var(--font-display);
+      font-size: 12pt;
+      line-height: 1.2;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-wrap: balance;
+      margin-bottom: 3.5mm;
+    }
+
+    .sec-sub {
+      font-size: 8.2pt;
+      color: var(--muted);
+      margin-top: -1.5mm;
+      margin-bottom: 4.5mm;
+    }
+
+    /* =====================================================================
+       TABLES & TIMELINES (PAGE 1)
+       ===================================================================== */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 5mm;
+    }
+
+    .data-table th {
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: 6.9pt;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      padding: 0 3mm 1.8mm 0;
+      border-bottom: 1px solid var(--hairline-strong);
+    }
+
+    .data-table th:last-child {
+      padding-right: 0;
+      text-align: right;
+    }
+
+    .data-table td {
+      padding: 2.15mm 3mm 2.15mm 0;
+      border-bottom: 1px solid var(--hairline);
+      vertical-align: top;
+      font-size: 8pt;
+      line-height: 1.38;
+      color: var(--body);
+    }
+
+    .data-table td:last-child {
+      padding-right: 0;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .col-strong {
+      color: var(--ink);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .col-mono {
+      font-family: var(--font-mono);
+      font-size: 7.4pt;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .col-period {
+      font-family: var(--font-mono);
+      font-size: 7.3pt;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .role-muted {
+      display: block;
+      font-size: 7.4pt;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 0.5mm;
+    }
+
+    .profile-quote {
+      padding: 3mm 4mm;
+      background-color: var(--surface);
+      border: 1px solid var(--hairline);
+      border-left: 2.5px solid var(--accent);
+      border-radius: 6px;
+      margin-bottom: 4.8mm;
+      font-size: 8pt;
+      line-height: 1.44;
+      color: var(--body);
+    }
+
+    /* =====================================================================
+       FLAGSHIP CASE STUDIES (PAGES 2 & 3)
+       ===================================================================== */
+    .case-item {
+      padding-bottom: 4.8mm;
+      margin-bottom: 4.8mm;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .case-item:last-of-type {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .case-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 4mm;
+      margin-bottom: 1.6mm;
+    }
+
+    .case-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 3mm;
+    }
+
+    .case-num {
+      font-family: var(--font-mono);
+      font-size: 12pt;
+      font-weight: 600;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    .case-title {
+      font-family: var(--font-display);
+      font-size: 11.8pt;
+      line-height: 1.18;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .case-subtitle {
+      font-size: 8.7pt;
+      font-weight: 500;
+      color: var(--body);
+      margin-bottom: 1.6mm;
+    }
+
+    .status-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.6mm;
+      font-family: var(--font-mono);
+      font-size: 7.2pt;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .status-tag--live {
+      color: var(--live);
+    }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 9999px;
+      background-color: var(--live);
+      display: inline-block;
+    }
+
+    .case-spec {
+      font-family: var(--font-mono);
+      font-size: 7.3pt;
+      color: var(--muted);
+      margin-bottom: 3mm;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .case-spec a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .case-prose {
+      font-size: 8.1pt;
+      line-height: 1.45;
+      color: var(--body);
+      margin-bottom: 2mm;
+    }
+
+    .case-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin: 2.6mm 0 3mm 0;
+      padding: 2.2mm 0;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .case-metric {
+      padding-right: 3mm;
+    }
+
+    .case-metric + .case-metric {
+      padding-left: 3.5mm;
+      border-left: 1px solid var(--hairline);
+    }
+
+    .case-metric-val {
+      font-family: var(--font-mono);
+      font-size: 9.2pt;
+      font-weight: 600;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .case-metric-lbl {
+      font-size: 7pt;
+      color: var(--muted);
+      margin-top: 0.5mm;
+    }
+
+    .visual-panel {
+      background-color: var(--surface);
+      border: 1px solid var(--hairline);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 2.6mm 4mm;
+      margin-top: 2.2mm;
+    }
+
+    .nda-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4mm;
+      background-color: var(--surface);
+      border: 1px solid var(--hairline);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 3.6mm 4.5mm;
+      margin-top: 3mm;
+    }
+
+    .nda-col + .nda-col {
+      padding-left: 4mm;
+      border-left: 1px solid var(--hairline);
+    }
+
+    .nda-kicker {
+      font-family: var(--font-mono);
+      font-size: 6.9pt;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 1.4mm;
+    }
+
+    .nda-text {
+      font-size: 7.7pt;
+      line-height: 1.44;
+      color: var(--body);
+    }
+
+    .visual-panel svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .visual-split {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 3.5mm;
+      margin-top: 2.5mm;
+    }
+
+    .visual-split .visual-panel {
+      margin-top: 0;
+      padding: 2.8mm 3.5mm;
+    }
+
+    .quant-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 7.5pt;
+      line-height: 1.45;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .quant-table th {
+      text-align: left;
+      color: var(--muted);
+      font-weight: 500;
+      padding: 0 2mm 2mm 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .quant-table td {
+      padding: 2mm 2mm 2mm 0;
+      border-bottom: 1px solid var(--hairline);
+      color: var(--body);
+    }
+
+    .quant-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .quant-table td.quant-ticker {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .quant-table td.quant-up {
+      color: var(--live);
+      font-weight: 500;
+    }
+
+    .quant-table td.quant-accent {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .quant-footnote {
+      margin-top: 1.8mm;
+      font-family: var(--font-mono);
+      font-size: 6.7pt;
+      color: var(--muted);
+    }
+
+    /* =====================================================================
+       PAGE 4: COMPACT CASES, FORMATS & CONTACT
+       ===================================================================== */
+    .case-item--compact {
+      padding-bottom: 3.4mm;
+      margin-bottom: 3.4mm;
+    }
+
+    .case-item--compact .case-metrics {
+      margin: 2mm 0 2.2mm 0;
+      padding: 1.8mm 0;
+    }
+
+    .case-item--compact .case-spec {
+      margin-bottom: 2mm;
+    }
+
+    .sec-title--spaced {
+      margin-top: 5.5mm;
+    }
+
+    .tracks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4mm;
+      margin-bottom: 4.5mm;
+    }
+
+    .track-col {
+      padding: 3.5mm 4mm;
+      background-color: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+    }
+
+    .track-num {
+      font-family: var(--font-mono);
+      font-size: 7.6pt;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1.5mm;
+    }
+
+    .track-title {
+      font-family: var(--font-display);
+      font-size: 8.2pt;
+      line-height: 1.28;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1.8mm;
+    }
+
+    .track-body {
+      font-size: 7.5pt;
+      line-height: 1.42;
+      color: var(--body);
+    }
+
+    .closing-card {
+      margin-top: auto;
+      padding: 4mm 5.5mm;
+      background-color: var(--surface);
+      border: 1px solid var(--hairline-strong);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3mm;
+    }
+
+    .closing-title {
+      font-family: var(--font-display);
+      font-size: 10pt;
+      line-height: 1.25;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1mm;
+    }
+
+    .closing-lead {
+      font-size: 7.8pt;
+      color: var(--muted);
+    }
+
+    .closing-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5mm;
+      justify-content: flex-start;
+    }
+
+    .cta-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2mm 3.6mm;
+      border-radius: 9999px;
+      font-family: var(--font-mono);
+      font-size: 7.3pt;
+      font-weight: 500;
+      border: 1px solid var(--hairline-strong);
+      color: var(--ink);
+      background-color: var(--panel);
+    }
+
+    .cta-pill--primary {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      color: #050507;
+      font-weight: 600;
+    }
+
+    .page-footer {
+      margin-top: auto;
+      padding-top: 3mm;
+      border-top: 1px solid var(--hairline);
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 6.8pt;
+      color: var(--muted);
+    }
+
+    .page-4-footer {
+      margin-top: 3.5mm;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- ===================================================================
+         PAGE 1: COVER, PROFILE & EXPERIENCE
+         =================================================================== -->
+    <section class="page">
+      <img id="hero-wave" class="hero-wave" alt="" aria-hidden="true">
+      <div class="hero-fade" aria-hidden="true"></div>
+
+      <div class="page-content">
+        <header class="header-pill">
+          <div class="brand">
+            <span class="brand-monogram" translate="no">RT<span class="brand-dot">.</span></span>
+            <span class="brand-name">Роман Ткачев</span>
+          </div>
+          <div class="pill-links">
+            <a class="accent-link" href="https://t.me/ceorussian" translate="no">@ceorussian</a>
+            <a href="https://github.com/Co4an" translate="no">github.com/Co4an</a>
+            <a href="mailto:ratkachev@edu.hse.ru" translate="no">ratkachev@edu.hse.ru</a>
+            <span>Москва · 2026</span>
+          </div>
+        </header>
+
+        <div class="hero-block">
+          <p class="hero-role">Роман Ткачев — инженер ИИ-систем и прикладного R&amp;D</p>
+          <h1 class="hero-title">AI-СИСТЕМЫ И ПРИКЛАДНОЙ R&amp;D</h1>
+          <p class="hero-lead">6 реализованных систем и исследований: от постквантового сетевого транспорта и автономных платформ поддержки принятия решений под NDA до открытого количественного терминала, графового ML, макромоделирования и запуска продуктов 0 → 1.</p>
+
+          <div class="hero-metrics">
+            <div class="hero-metric">
+              <div class="hero-metric-val">6</div>
+              <div class="hero-metric-lbl">ключевых систем и исследований</div>
+            </div>
+            <div class="hero-metric">
+              <div class="hero-metric-val">757</div>
+              <div class="hero-metric-lbl">биржевых бумаг в открытом терминале</div>
+            </div>
+            <div class="hero-metric">
+              <div class="hero-metric-val">100<span>%</span></div>
+              <div class="hero-metric-lbl">локальный air-gap контур без облака</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-quote">
+          Ключевой принцип — отделять вероятностные языковые модели от критических расчётов и контура безопасности. Языковые модели отвечают за смысловую работу с данными и документами, тогда как финансовая логика, проверки и защищённый транспорт исполняются детерминированными модулями с воспроизводимым контролем качества.
+        </div>
+
+        <h2 class="sec-title">Инженерный профиль</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Направление</th>
+              <th>Реализованные системы</th>
+              <th>Масштаб и статус</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-strong">Системное ПО и ИБ</td>
+              <td><span translate="no">Veil-H2</span> (кроссплатформенный защищённый транспорт: сервер, <span translate="no">Android</span>, <span translate="no">macOS</span>)</td>
+              <td class="col-mono">Закрытый контур · NDA</td>
+            </tr>
+            <tr>
+              <td class="col-strong">Локальный ИИ</td>
+              <td>СППР «Логос» (автономный финансовый контроллинг и сверка паритета на <span translate="no">Apple Silicon</span>)</td>
+              <td class="col-mono">4 формата · 100% air-gap</td>
+            </tr>
+            <tr>
+              <td class="col-strong">Финансы и R&amp;D</td>
+              <td><span translate="no">MOEX &amp; SPBEX Quant Advisor</span>, <span translate="no">PolarGate</span>, макромодель РФ (2026–2030)</td>
+              <td class="col-mono">757 бумаг · +0,1420 F1 · 48 мес.</td>
+            </tr>
+            <tr>
+              <td class="col-strong">Продукты</td>
+              <td><span translate="no">Advexo</span> (веб-кабинет, <span translate="no">Telegram</span>-бот и <span translate="no">Android</span>-клиент, 20 интервью <span translate="no">Mom Test</span>)</td>
+              <td class="col-mono">0 → 1 запуск · 3 клиента</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 class="sec-title">Опыт и образование</h2>
+        <table class="data-table" style="margin-bottom: 0;">
+          <thead>
+            <tr>
+              <th>Организация и роль</th>
+              <th>Период</th>
+              <th style="text-align: left;">Ключевой вклад</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-strong">Аксиома ИИ<span class="role-muted">Разработчик ПО</span></td>
+              <td class="col-period">Июнь 2026 — н.&nbsp;в.</td>
+              <td>Разработка программного обеспечения, системных сервисов и прикладных ИИ-модулей.</td>
+            </tr>
+            <tr>
+              <td class="col-strong"><span translate="no">Sanofi</span><span class="role-muted" translate="no">Intern Public Affairs</span></td>
+              <td class="col-period">Нояб. 2025 — апр. 2026</td>
+              <td>Анализ национальных и региональных программ здравоохранения, мониторинг нормативных актов и подготовка регулярных аналитических обзоров для руководства.</td>
+            </tr>
+            <tr>
+              <td class="col-strong">Минпромторг России<span class="role-muted">Аналитик (стажёр, ФКР ОПК)</span></td>
+              <td class="col-period">Июнь — авг. 2025</td>
+              <td>Стажировка по программе ФКР ОПК от НИУ ВШЭ: аналитика проекта импортозамещения медизделий из нитинола, оценка технологических разрывов и концепция цифрового реестра специалистов.</td>
+            </tr>
+            <tr>
+              <td class="col-strong">РАТИМИР<span class="role-muted">Практикант-экономист</span></td>
+              <td class="col-period">Июль 2024</td>
+              <td>Автоматизация управленческой отчётности в <span translate="no">Excel</span> и анализ данных о сельскохозяйственных полях и эффективности удобрений с использованием ИИ.</td>
+            </tr>
+            <tr>
+              <td class="col-strong">ВШБ НИУ ВШЭ<span class="role-muted">Управление бизнесом</span></td>
+              <td class="col-period">Выпуск 2027</td>
+              <td>Бакалавриат (Москва), участник ПМЭФ; академический английский уровня B2 (Лингвотест НИУ ВШЭ); совмещение учёбы с R&amp;D и продуктовыми запусками.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <footer class="page-footer">
+          <span>Роман Ткачев · Портфолио проектов и R&amp;D</span>
+          <span>1 / 4</span>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         PAGE 2: FLAGSHIP SYSTEMS (NDA-SAFE OVERVIEW: VEIL-H2 & LOGOS)
+         =================================================================== -->
+    <section class="page">
+      <div class="page-content">
+        <header class="running-head">
+          <div class="brand">
+            <span class="brand-monogram" translate="no">RT<span class="brand-dot">.</span></span>
+            <span class="brand-name">Роман Ткачев</span>
+          </div>
+          <div class="running-right">
+            <span>Флагманские системы</span>
+            <span class="running-page">2 / 4</span>
+          </div>
+        </header>
+
+        <h2 class="sec-title">Флагманские системы</h2>
+        <p class="sec-sub">Закрытые коммерческие и исследовательские разработки. Архитектура и исходный код не раскрываются в публичном документе; демонстрация доступна на личной встрече в рамках NDA.</p>
+
+        <article class="case-item">
+          <div class="case-header">
+            <div class="case-title-row">
+              <span class="case-num">01</span>
+              <h3 class="case-title" translate="no">Veil-H2</h3>
+            </div>
+            <span class="status-tag">Закрытый проект · NDA</span>
+          </div>
+          <p class="case-subtitle">Защищённый кроссплатформенный L3 VPN-продукт нового поколения</p>
+          <p class="case-spec">Платформы: серверная инфраструктура, нативные клиенты <span translate="no">Android</span> и <span translate="no">macOS</span> · Полный цикл разработки 0 → 1</p>
+          <p class="case-prose">Продукт решает практическое противоречие между устойчивостью соединения в сложных сетевых условиях и полноценной защитой всего трафика устройства. В рамках проекта создан законченный кроссплатформенный стек с упором на долгосрочную криптостойкость, минимизацию сетевых утечек и удобство повседневного использования на мобильных и настольных платформах.</p>
+          <p class="case-prose">Особое внимание уделено эксплуатационной надёжности: аппаратной защите ключей на стороне пользователя, отказоустойчивости при смене сетей, автоматизированному контуру нагрузочного тестирования и проверок безопасности, а также контролируемой доставке обновлений.</p>
+
+          <div class="case-metrics">
+            <div class="case-metric">
+              <div class="case-metric-val">3 платформы</div>
+              <div class="case-metric-lbl">сервер, <span translate="no">Android</span> и <span translate="no">macOS</span></div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-val">Постквантовый</div>
+              <div class="case-metric-lbl">профиль долгосрочной защиты трафика</div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-val">L3 туннель</div>
+              <div class="case-metric-lbl">изоляция всего трафика ОС без утечек</div>
+            </div>
+          </div>
+
+          <div class="nda-grid">
+            <div class="nda-col">
+              <div class="nda-kicker">Задача продукта</div>
+              <p class="nda-text">Обеспечить стабильную защищённую связь на уровне всей операционной системы без деградации пользовательского опыта.</p>
+            </div>
+            <div class="nda-col">
+              <div class="nda-kicker">Результат</div>
+              <p class="nda-text">Работающие нативные клиенты и серверный контур с единой политикой безопасности и защитой от утечек трафика.</p>
+            </div>
+            <div class="nda-col">
+              <div class="nda-kicker">Границы раскрытия</div>
+              <p class="nda-text">Внутренняя архитектура, протокольные детали и исходный код закрыты и предоставляются только в рамках NDA.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-item">
+          <div class="case-header">
+            <div class="case-title-row">
+              <span class="case-num">02</span>
+              <h3 class="case-title">СППР «Логос»</h3>
+            </div>
+            <span class="status-tag">Закрытый проект · NDA</span>
+          </div>
+          <p class="case-subtitle">Автономная локальная платформа поддержки управленческих и финансовых решений</p>
+          <p class="case-spec">Контур: полный <span translate="no">air-gap</span> на <span translate="no">Apple Silicon</span> · сквозной числовой паритет 4 форматов</p>
+          <p class="case-prose">Платформа создана для корпоративного финансового контроллинга, сценарного моделирования МСФО и отраслевой аналитики в полностью закрытом контуре без передачи чувствительных данных во внешние облачные сервисы. Система автоматизирует подготовку согласованного пакета материалов — от расчётных таблиц до аналитических записок и презентаций.</p>
+          <p class="case-prose">Ключевая продуктовая ценность — исключение расхождений и ошибок в цифрах: все финансовые расчёты, сверки баланса и проверка числового паритета между итоговыми документами выполняются детерминированно и воспроизводимо.</p>
+
+          <div class="case-metrics">
+            <div class="case-metric">
+              <div class="case-metric-val">100% локально</div>
+              <div class="case-metric-lbl">автономный <span translate="no">air-gap</span> без облака</div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-val">4 формата</div>
+              <div class="case-metric-lbl">единый паритет: <span translate="no">Excel, Word, MD</span>, слайды</div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-val">Детерминизм</div>
+              <div class="case-metric-lbl">финансовые расчёты вне языковой модели</div>
+            </div>
+          </div>
+
+          <div class="nda-grid">
+            <div class="nda-col">
+              <div class="nda-kicker">Задача бизнеса</div>
+              <p class="nda-text">Ускорить подготовку финансовой и отраслевой аналитики без риска утечки коммерческой тайны во внешние ИИ-сервисы.</p>
+            </div>
+            <div class="nda-col">
+              <div class="nda-kicker">Результат</div>
+              <p class="nda-text">Воспроизводимый выпуск расчётных моделей, текстовых заключений и презентаций с автоматической сверкой всех показателей.</p>
+            </div>
+            <div class="nda-col">
+              <div class="nda-kicker">Границы раскрытия</div>
+              <p class="nda-text">Внутреннее устройство расчётных модулей и исходный код закрыты; демонстрация на тестовых данных — по запросу.</p>
+            </div>
+          </div>
+        </article>
+
+        <footer class="page-footer">
+          <span>Роман Ткачев · Портфолио проектов и R&amp;D</span>
+          <span>2 / 4</span>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         PAGE 3: FLAGSHIP ARCHITECTURE (03 MOEX QUANT & 04 POLARGATE)
+         =================================================================== -->
+    <section class="page">
+      <div class="page-content">
+        <header class="running-head">
+          <div class="brand">
+            <span class="brand-monogram" translate="no">RT<span class="brand-dot">.</span></span>
+            <span class="brand-name">Роман Ткачев</span>
+          </div>
+          <div class="running-right">
+            <span>Открытые системы и исследования</span>
+            <span class="running-page">3 / 4</span>
+          </div>
+        </header>
+
+        <article class="case-item">
+          <div class="case-header">
+            <div class="case-title-row">
+              <span class="case-num">03</span>
+              <h3 class="case-title" translate="no">MOEX &amp; SPBEX Quant Advisor</h3>
+            </div>
+            <span class="status-tag status-tag--live"><span class="status-dot" aria-hidden="true"></span>Публичный код</span>
+          </div>
+          <p class="case-subtitle">Открытый количественный терминал оценки российских акций без платных источников</p>
+          <p class="case-spec">Репозиторий: <a href="https://github.com/Co4an/moex-spb-quant-advisor" translate="no">github.com/Co4an/moex-spb-quant-advisor</a> · Живой терминал: <a href="https://co4an.github.io/moex-spb-quant-advisor/" translate="no">co4an.github.io/moex-spb-quant-advisor</a></p>
+          <p class="case-prose">Детерминированный пайплайн на стандартной библиотеке <span translate="no">Python</span> и веб-интерфейс терминала собирают рыночные данные по 510 бумагам TQBR Московской биржи и 247 инструментам СПБ Биржи, считывают ключевую ставку и курсы валют Банка России, нормализуют отчётности МСФО и РСБУ по 31 ведущему эмитенту 8 секторов и автоматически проверяют бухгалтерские тождества с поправкой на неторгуемые обыкновенные и привилегированные классы акций. Система выделяет 120 очищенных новостных катализаторов, рассчитывает пятифакторный Z-скоринг на три временных горизонта (1–3 месяца, 6–12 месяцев и 1–3 года), формирует модельные портфели и проверяет целостность данных по <span translate="no">SHA-256</span>.</p>
+
+          <div class="case-metrics">
+            <div class="case-metric">
+              <div class="case-metric-val">757 бумаг</div>
+              <div class="case-metric-lbl">510 Мосбиржа TQBR + 247 СПБ Биржа</div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-val">31 эмитент</div>
+              <div class="case-metric-lbl">нормализация МСФО / РСБУ по 8 секторам</div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-val">3 горизонта</div>
+              <div class="case-metric-lbl">Z-скоринг, портфели и контроль <span translate="no">SHA-256</span></div>
+            </div>
+          </div>
+
+          <div class="visual-panel">
+            <table class="quant-table" aria-label="Срез скоринга акций Московской биржи при ставке ЦБ 14%">
+              <thead>
+                <tr>
+                  <th>Тикер</th>
+                  <th>Цена</th>
+                  <th>Коридор входа</th>
+                  <th>Модельная оценка</th>
+                  <th>Горизонт</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="quant-ticker" translate="no">BSPB</td>
+                  <td>256,00 ₽</td>
+                  <td>247,04–257,28</td>
+                  <td class="quant-up">375,30 (+67,7%)</td>
+                  <td>6–12М</td>
+                </tr>
+                <tr>
+                  <td class="quant-ticker" translate="no">SNGSP</td>
+                  <td>40,97 ₽</td>
+                  <td>39,12–40,76</td>
+                  <td class="quant-up">60,38 (+68,5%)</td>
+                  <td>8–12М</td>
+                </tr>
+                <tr>
+                  <td class="quant-ticker" translate="no">HEAD</td>
+                  <td>2 719,00 ₽</td>
+                  <td>2 596,6–2 705,4</td>
+                  <td class="quant-up">3 532,0 (+46,8%)</td>
+                  <td>12–36М</td>
+                </tr>
+                <tr>
+                  <td class="quant-ticker" translate="no">LKOH</td>
+                  <td>6 024,00 ₽</td>
+                  <td>5 873,4–6 024,0</td>
+                  <td class="quant-up">8 795,0 (+63,0%)</td>
+                  <td>2–3М / 36М</td>
+                </tr>
+                <tr>
+                  <td class="quant-ticker" translate="no">MOEX</td>
+                  <td>154,80 ₽</td>
+                  <td>147,83–154,03</td>
+                  <td class="quant-up">215,79 (+55,2%)</td>
+                  <td>6–12М</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="quant-footnote">Срез открытого терминала · ключевая ставка ЦБ РФ 14,0% · модельные оценки, не инвестрекомендация</p>
+          </div>
+        </article>
+
+        <article class="case-item">
+          <div class="case-header">
+            <div class="case-title-row">
+              <span class="case-num">04</span>
+              <h3 class="case-title" translate="no">PolarGate</h3>
+            </div>
+            <span class="status-tag">Исследование и расчётный комплекс</span>
+          </div>
+          <p class="case-subtitle">Прикладное графовое моделирование коллективной динамики и прогнозирование голосований</p>
+          <p class="case-spec"><span translate="no">PyTorch</span> · <span translate="no">Python</span> · <span translate="no">LaTeX/PDF</span> · закрытый исследовательский проект</p>
+          <p class="case-prose">Научно-исследовательская модель прогнозирования групповой динамики с проверкой без утечки данных во времени показала прирост <span translate="no">Macro-F1</span> на +0,1420 на 528 контрольных голосованиях Конгресса США (0,5731 против 0,4311 у <span translate="no">Unsigned GNN</span>). На горизонте 360 шагов модель с демпфированием Фридкина–Джонсена удерживает дисперсию мнений на уровне 0,230 против эталонных 0,247 при задержке шага 0,0032&nbsp;мс, тогда как <span translate="no">Qwen2.5-1.5B-Instruct</span> теряет 33,4% разброса до 0,165. Архитектура и код закрыты.</p>
+
+          <div class="visual-split">
+            <div class="visual-panel">
+              <svg viewBox="0 0 380 132" role="img" aria-label="Сравнение Macro-F1 на 528 голосованиях Конгресса США">
+                <text x="10" y="18" fill="#8E8E98" font-family="JetBrains Mono, monospace" font-size="9">КОНГРЕСС США (528 ГОЛОСОВАНИЙ) · MACRO-F1</text>
+                <text x="10" y="45" fill="#8E8E98" font-family="JetBrains Mono, monospace" font-size="9.5">Linear Threshold</text>
+                <rect x="114" y="35" width="98" height="12" rx="3" fill="rgba(255,255,255,0.14)"/>
+                <text x="220" y="45" fill="#8E8E98" font-family="JetBrains Mono, monospace" font-size="9.5">0,3860</text>
+
+                <text x="10" y="70" fill="#D4D4D8" font-family="JetBrains Mono, monospace" font-size="9.5">Unsigned GNN</text>
+                <rect x="114" y="60" width="110" height="12" rx="3" fill="rgba(255,255,255,0.24)"/>
+                <text x="232" y="70" fill="#D4D4D8" font-family="JetBrains Mono, monospace" font-size="9.5">0,4311</text>
+
+                <text x="10" y="95" fill="#F4F4F5" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600">PolarGate</text>
+                <rect x="114" y="85" width="146" height="12" rx="3" fill="#FF5E1A"/>
+                <text x="268" y="95" fill="#FF8C5A" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600">0,5731 (+0,1420)</text>
+
+                <line x1="10" y1="110" x2="370" y2="110" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <text x="10" y="125" fill="#8E8E98" font-family="JetBrains Mono, monospace" font-size="8.5">Qwen2.5: 45,92 мс/шаг (−33,4% std)</text>
+                <text x="370" y="125" text-anchor="end" fill="#22C55E" font-family="JetBrains Mono, monospace" font-size="8.5">PolarGate: 0,0032 мс/шаг</text>
+              </svg>
+            </div>
+            <div class="visual-panel">
+              <svg viewBox="0 0 300 132" role="img" aria-label="Сравнение удержания дисперсии мнений на 360 шагах">
+                <text x="10" y="18" fill="#8E8E98" font-family="JetBrains Mono, monospace" font-size="8.5">УДЕРЖАНИЕ ДИСПЕРСИИ (360 ШАГОВ)</text>
+                <line x1="16" y1="112" x2="284" y2="112" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                <line x1="16" y1="38" x2="284" y2="38" stroke="#22C55E" stroke-dasharray="4 4" stroke-width="1"/>
+                <text x="16" y="32" fill="#22C55E" font-family="JetBrains Mono, monospace" font-size="8">Эталон Std 0,247</text>
+
+                <rect x="28" y="63" width="40" height="49" rx="3" fill="rgba(255,255,255,0.16)"/>
+                <text x="48" y="76" text-anchor="middle" fill="#D4D4D8" font-family="JetBrains Mono, monospace" font-size="8">0,165</text>
+                <text x="48" y="125" text-anchor="middle" fill="#8E8E98" font-family="JetBrains Mono, monospace" font-size="8">Qwen2.5</text>
+
+                <rect x="94" y="52" width="40" height="60" rx="3" fill="rgba(255,255,255,0.26)"/>
+                <text x="114" y="65" text-anchor="middle" fill="#F4F4F5" font-family="JetBrains Mono, monospace" font-size="8">0,200</text>
+                <text x="114" y="125" text-anchor="middle" fill="#8E8E98" font-family="JetBrains Mono, monospace" font-size="8">FJ-Damp</text>
+
+                <rect x="160" y="45" width="40" height="67" rx="3" fill="rgba(255,94,26,0.55)"/>
+                <text x="180" y="58" text-anchor="middle" fill="#F4F4F5" font-family="JetBrains Mono, monospace" font-size="8">0,222</text>
+                <text x="180" y="125" text-anchor="middle" fill="#D4D4D8" font-family="JetBrains Mono, monospace" font-size="8">Hybrid</text>
+
+                <rect x="226" y="43" width="40" height="69" rx="3" fill="#FF5E1A"/>
+                <text x="246" y="56" text-anchor="middle" fill="#050507" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600">0,230</text>
+                <text x="246" y="125" text-anchor="middle" fill="#F4F4F5" font-family="JetBrains Mono, monospace" font-size="8">PolarGate</text>
+              </svg>
+            </div>
+          </div>
+        </article>
+
+        <footer class="page-footer">
+          <span>Роман Ткачев · Портфолио проектов и R&amp;D</span>
+          <span>3 / 4</span>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         PAGE 4: SELECTED PROJECTS, COLLABORATION FORMATS & CONTACT
+         =================================================================== -->
+    <section class="page">
+      <div class="page-content">
+        <header class="running-head">
+          <div class="brand">
+            <span class="brand-monogram" translate="no">RT<span class="brand-dot">.</span></span>
+            <span class="brand-name">Роман Ткачев</span>
+          </div>
+          <div class="running-right">
+            <span>Макромоделирование, продукт и сотрудничество</span>
+            <span class="running-page">4 / 4</span>
+          </div>
+        </header>
+
+        <article class="case-item case-item--compact">
+          <div class="case-header">
+            <div class="case-title-row">
+              <span class="case-num">05</span>
+              <h3 class="case-title">Макроэкономическая модель РФ (2026–2030)</h3>
+            </div>
+            <span class="status-tag">Закрытое исследование</span>
+          </div>
+          <p class="case-subtitle">Замкнутая 48-месячная сценарная макроэкономическая и бюджетная модель на 120 микрокогортах</p>
+          <p class="case-spec"><span translate="no">Python</span> · <span translate="no">NumPy</span> · <span translate="no">LaTeX/PDF</span> · закрытый исследовательский проект</p>
+          <p class="case-prose">Семиблочная динамическая система сопрягает внешний торговый баланс, федеральный бюджет и ликвидную часть ФНБ с тремя эндогенными контурами реакции денежно-кредитной и бюджетной политики на горизонте 48 месяцев (декабрь 2026 — ноябрь 2030). Модель рассчитывает согласованные траектории ключевой ставки, инфляции ИПЦ, курса рубля и покрытия процентных расходов в четырёх сценариях. Расчётный код и калибровочные данные закрыты.</p>
+
+          <div class="case-metrics">
+            <div class="case-metric">
+              <div class="case-metric-val">48 мес.</div>
+              <div class="case-metric-lbl">горизонт прогноза 2026–2030</div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-val">120</div>
+              <div class="case-metric-lbl">микрокогорт в 7-блочной системе</div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-val">4 сценария</div>
+              <div class="case-metric-lbl">эндогенная реакция ставки и бюджета</div>
+            </div>
+          </div>
+
+          <div class="visual-panel">
+            <svg viewBox="0 0 640 100" role="img" aria-label="Схематичные траектории четырёх макросценариев РФ на 48 месяцев">
+              <text x="10" y="14" fill="#8E8E98" font-family="JetBrains Mono, monospace" font-size="8.5">СХЕМАТИЧНЫЙ ИНДЕКС МАКРОДАВЛЕНИЯ · 4 СЦЕНАРИЯ (ДЕКАБРЬ 2026 — НОЯБРЬ 2030)</text>
+              <line x1="16" y1="30" x2="572" y2="30" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <line x1="16" y1="54" x2="572" y2="54" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <line x1="16" y1="78" x2="572" y2="78" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+              <line x1="432" y1="22" x2="432" y2="78" stroke="rgba(255,255,255,0.14)" stroke-dasharray="3 3"/>
+              <polyline points="20,48 158,41 296,33 434,27 570,22" fill="none" stroke="#FF5E1A" stroke-width="2"/>
+              <polyline points="20,48 158,45 296,42 434,39 570,37" fill="none" stroke="#FB923C" stroke-dasharray="6 3" stroke-width="1.5"/>
+              <polyline points="20,48 158,52 296,55 434,57 570,56" fill="none" stroke="#F4F4F5" stroke-width="1.5"/>
+              <polyline points="20,48 158,60 296,66 434,71 570,70" fill="none" stroke="#22C55E" stroke-dasharray="4 3" stroke-width="1.4"/>
+              <text x="580" y="25" text-anchor="start" fill="#FF8C5A" font-family="JetBrains Mono, monospace" font-size="8">Стресс</text>
+              <text x="580" y="40" text-anchor="start" fill="#FDBA74" font-family="JetBrains Mono, monospace" font-size="8">Жёсткий</text>
+              <text x="580" y="59" text-anchor="start" fill="#D4D4D8" font-family="JetBrains Mono, monospace" font-size="8">Базовый</text>
+              <text x="580" y="73" text-anchor="start" fill="#22C55E" font-family="JetBrains Mono, monospace" font-size="8">Мягкий</text>
+              <text x="20" y="93" fill="#8E8E98" font-family="JetBrains Mono, monospace" font-size="8.5">Дек 2026</text>
+              <text x="296" y="93" text-anchor="middle" fill="#8E8E98" font-family="JetBrains Mono, monospace" font-size="8.5">2028</text>
+              <text x="570" y="93" text-anchor="end" fill="#8E8E98" font-family="JetBrains Mono, monospace" font-size="8.5">Ноя 2030</text>
+            </svg>
+          </div>
+        </article>
+
+        <article class="case-item case-item--compact">
+          <div class="case-header">
+            <div class="case-title-row">
+              <span class="case-num">06</span>
+              <h3 class="case-title" translate="no">Advexo</h3>
+            </div>
+            <span class="status-tag">Приватный продукт</span>
+          </div>
+          <p class="case-subtitle">AI-SMM-платформа для <span translate="no">Telegram</span>: полный продуктовый цикл 0 → 1</p>
+          <p class="case-spec"><span translate="no">Python</span> · <span translate="no">PostgreSQL</span> · <span translate="no">Kotlin</span> · <span translate="no">Telegram</span> · веб-кабинет, бот и <span translate="no">Android</span>-клиент</p>
+          <p class="case-prose">Продуктовая платформа для автоматизации контент-маркетинга малого бизнеса в <span translate="no">Telegram</span> с сохранением голоса бренда, веб-кабинетом, ботом и нативным <span translate="no">Android</span>-приложением. Проведён полный продуктовый цикл от проблемных интервью по методике <span translate="no">Mom Test</span> и формулировки JTBD до проверки продуктовых гипотез и выпуска MVP. Внутренняя архитектура и код закрыты.</p>
+
+          <div class="case-metrics" style="margin-bottom: 0;">
+            <div class="case-metric">
+              <div class="case-metric-val">20 интервью</div>
+              <div class="case-metric-lbl">кастдев по методике <span translate="no">Mom Test</span></div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-val">0 → 1 MVP</div>
+              <div class="case-metric-lbl">полный продуктовый цикл</div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-val">3 клиента</div>
+              <div class="case-metric-lbl">веб-кабинет, бот и <span translate="no">Android</span></div>
+            </div>
+          </div>
+        </article>
+
+        <h2 class="sec-title sec-title--spaced">Форматы взаимодействия</h2>
+        <div class="tracks-grid">
+          <div class="track-col">
+            <div class="track-num">01</div>
+            <h3 class="track-title">Локальные ИИ-контуры и верифицируемая аналитика</h3>
+            <p class="track-body">Проектирование закрытых систем на <span translate="no">Apple Silicon</span> и выделенных GPU с формальной проверкой расчётов, контролем числового паритета и отсутствием утечек во внешние облака.</p>
+          </div>
+          <div class="track-col">
+            <div class="track-num">02</div>
+            <h3 class="track-title">Запуск продуктов 0 → 1</h3>
+            <p class="track-body">Полный цикл от проблемных интервью <span translate="no">Mom Test</span> и проверки гипотез до бэкенда, баз данных, веб-кабинетов и нативных клиентов под <span translate="no">Android</span> и <span translate="no">macOS</span>.</p>
+          </div>
+          <div class="track-col">
+            <div class="track-num">03</div>
+            <h3 class="track-title">R&amp;D, финмодели и сценарный анализ</h3>
+            <p class="track-body">Воспроизводимые расчётные пайплайны, многолистовые модели МСФО, макроэкономическое моделирование и прикладное машинное обучение.</p>
+          </div>
+        </div>
+
+        <div class="closing-card">
+          <div>
+            <h3 class="closing-title">Обсудим совместный проект или пилот</h3>
+            <p class="closing-lead">Отвечаю лично в <span translate="no">Telegram</span> и по почте. Демонстрация закрытых проектов доступна на встрече · Москва (гибрид и удалённо).</p>
+          </div>
+          <div class="closing-pills">
+            <a class="cta-pill cta-pill--primary" href="https://t.me/ceorussian" translate="no">Telegram @ceorussian</a>
+            <a class="cta-pill" href="mailto:ratkachev@edu.hse.ru" translate="no">ratkachev@edu.hse.ru</a>
+            <a class="cta-pill" href="https://github.com/Co4an" translate="no">github.com/Co4an</a>
+          </div>
+        </div>
+
+        <footer class="page-footer page-4-footer">
+          <span>Роман Ткачев · Портфолио проектов и R&amp;D · Редакция: 23 ноября 2026 г.</span>
+          <span>Закрытые кейсы приведены в границах NDA · 4 / 4</span>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function paintGlyphTerrainToRaster() {
+      const img = document.getElementById("hero-wave");
+      if (!img) return;
+
+      function renderCanvasWave() {
+        const GLYPHS = ["·", "·", ":", "-", "=", "+", "/", "\\", "{", "}", "<", ">", "0", "1", "λ", "#"];
+        const width = 794;
+        const height = 460;
+        const scaleDpr = 2.5;
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.round(width * scaleDpr);
+        canvas.height = Math.round(height * scaleDpr);
+        const ctx = canvas.getContext("2d", { alpha: false });
+        ctx.scale(scaleDpr, scaleDpr);
+
+        ctx.fillStyle = "#050507";
+        ctx.fillRect(0, 0, width, height);
+
+        const grad = ctx.createRadialGradient(width * 0.68, height * 0.40, 10, width * 0.68, height * 0.40, width * 0.52);
+        grad.addColorStop(0, "rgba(255, 94, 26, 0.16)");
+        grad.addColorStop(0.45, "rgba(255, 94, 26, 0.04)");
+        grad.addColorStop(1, "rgba(5, 5, 7, 0)");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+
+        const horizonY = 54;
+        const cols = 58;
+        const rows = 28;
+        const t = 1.45;
+        const fov = 440;
+        const camPitch = 0.28;
+        const camYaw = 0.04;
+        const cosP = Math.cos(camPitch), sinP = Math.sin(camPitch);
+        const cosY = Math.cos(camYaw), sinY = Math.sin(camYaw);
+        const worldSpanX = 28.0;
+        const worldSpanZ = 20.0;
+        const camY = 2.55;
+        const camZOffset = 4.6;
+
+        function waveHeight(gx, gz) {
+          const w1 = Math.sin(gx * 0.42 + t * 0.72) * Math.cos(gz * 0.34 - t * 0.48);
+          const w2 = Math.sin((gx * 0.25 - gz * 0.38) + t * 0.52) * 0.65;
+          const w3 = Math.cos(Math.hypot(gx * 0.32, gz * 0.28) - t * 0.85) * 0.42;
+          return (w1 + w2 + w3) * 0.52;
+        }
+
+        ctx.textAlign = "center";
+        ctx.textBaseline = "alphabetic";
+
+        for (let rz = rows - 1; rz >= 0; rz--) {
+          const nz = rz / (rows - 1);
+          const wz = 2.0 + nz * worldSpanZ;
+
+          for (let cx = 0; cx < cols; cx++) {
+            const nx = cx / (cols - 1) - 0.5;
+            const wx = nx * worldSpanX;
+            const wy = waveHeight(wx, wz) * 1.6;
+
+            const dx = wx;
+            const dy = wy - camY;
+            const dz = wz + camZOffset;
+
+            const rx = dx * cosY - dz * sinY;
+            const rz1 = dx * sinY + dz * cosY;
+            const ry = dy * cosP - rz1 * sinP;
+            const rz2 = dy * sinP + rz1 * cosP;
+
+            if (rz2 <= 1.0) continue;
+
+            const scale = fov / rz2;
+            const sx = width * 0.5 + rx * scale;
+            const sy = horizonY - ry * scale;
+
+            if (sx < -10 || sx > width + 10 || sy < 56 || sy > 286) continue;
+
+            const normH = Math.max(0, Math.min(1, (wy + 1.45) / 2.9));
+            const depthFade = Math.max(0.14, Math.min(1, 1.06 - nz * 0.78));
+            const edgeFade = sy > 240 ? Math.max(0, (286 - sy) / 46) : 1.0;
+            const leftTextQuiet = (sx < 490 && sy > 96 && sy < 268) ? 0.32 : 1.0;
+            const glyphIdx = Math.min(GLYPHS.length - 1, Math.floor(normH * GLYPHS.length));
+            const glyph = GLYPHS[glyphIdx];
+
+            const fontSize = Math.max(6.2, Math.min(11.6, scale * 0.36));
+            const amberMix = Math.max(0, (normH - 0.48) / 0.52);
+            const alpha = (0.18 + normH * 0.62) * depthFade * edgeFade * leftTextQuiet;
+
+            if (amberMix > 0.14) {
+              const r = Math.round(244 + (255 - 244) * amberMix);
+              const g = Math.round(244 + (94 - 244) * amberMix);
+              const b = Math.round(245 + (26 - 245) * amberMix);
+              ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(0.92, alpha * 1.25).toFixed(3)})`;
+            } else {
+              ctx.fillStyle = `rgba(212,212,216,${(alpha * 0.68).toFixed(3)})`;
+            }
+
+            ctx.font = `${fontSize.toFixed(1)}px "JetBrains Mono", monospace`;
+            ctx.fillText(glyph, sx, sy);
+          }
+        }
+
+        img.src = canvas.toDataURL("image/png");
+        window.__HERO_READY__ = true;
+      }
+
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(renderCanvasWave);
+      } else {
+        renderCanvasWave();
+      }
+    })();
+  </script>
+</body>
+</html>
